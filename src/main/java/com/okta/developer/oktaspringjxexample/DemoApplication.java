@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 @SpringBootApplication
 public class DemoApplication {
 
-	Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+	static Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
 	public static void main(String[] args) {
 		logger.info("An INFO Message XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
