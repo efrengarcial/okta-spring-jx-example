@@ -1,0 +1,30 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  artifacts:
+  - image: changeme
+    context: .
+    docker: {}
+  tagPolicy:
+    envTemplate:
+      template: '{{.DOCKER_REGISTRY}}/efrengarcial/okta-spring-jx-example:{{.VERSION}}'
+  local: {}
+deploy:
+  kubectl: {}
+profiles:
+- name: dev
+  build:
+    artifacts:
+    - docker: {}
+    tagPolicy:
+      envTemplate:
+        template: '{{.DOCKER_REGISTRY}}/efrengarcial/okta-spring-jx-example:{{.DIGEST_HEX}}'
+    local: {}
+  deploy:
+    helm:
+      releases:
+      - name: okta-spring-jx-example
+        chartPath: charts/okta-spring-jx-example
+        setValueTemplates:
+          image.repository: '{{.DOCKER_REGISTRY}}/efrengarcial/okta-spring-jx-example'
+          image.tag: '{{.DIGEST_HEX}}'
